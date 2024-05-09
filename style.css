@@ -1,0 +1,89 @@
+.col-form-label,
+.form-control {
+    margin: 0%;
+    padding: 0%;
+    width: 100%;
+    height: 100%;
+}
+
+.primary {
+    padding-right: 0%;
+    font-size: 24px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+
+.midlle {
+    padding: 0%;
+}
+
+.finaly {
+    padding-left: 0%;
+}
+
+span.label {
+    margin-top: 20% !important;
+}
+
+/* MODAL */
+
+.card {
+    width: 100%;
+    border-radius: 0.5rem;
+    background-color: #fff;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    border: 1px solid transparent;
+    position: absolute;
+    top: 50%;
+
+}
+
+.card a {
+    text-decoration: none
+}
+
+.content {
+    padding: 1.1rem;
+}
+
+.title {
+    color: #111827;
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+    font-weight: 600;
+    text-align: center;
+}
+
+.desc {
+    margin-top: 0.5rem;
+    color: #6B7280;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+}
+
+.action {
+    display: inline-flex;
+    margin-top: 1rem;
+    color: #ffffff;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    font-weight: 500;
+    align-items: center;
+    gap: 0.25rem;
+    background-color: #2563EB;
+    padding: 4px 8px;
+    border-radius: 4px;
+}
+
+.action span {
+    transition: .3s ease;
+}
+
+.action:hover span {
+    transform: translateX(4px);
+}
+
+.cards-medicamento {
+    position: relative;
+}

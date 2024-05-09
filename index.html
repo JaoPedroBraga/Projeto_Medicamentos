@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="shortcut icon" href="#">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    <style>
+       
+    </style>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="row g-3">
+                <div class="col align-self-start">
+                    <div class="mb-3 row">
+                        
+                        <div class="col-sm-2 primary">
+                            <label for="pesqremedio" style="margin-top: 5% !important;" class="col-sm-12 col-form-label"><span class="label">Pesquisar
+                                    remedio</span></label>
+                        </div>
+
+                        <div class="col-sm-3 midlle">
+                            <input style="height: 100%;" id="pesqremedio" type="text" class="form-control">
+                        </div>
+
+                        <div class="col-sm-1 midlle">
+                            <button id="atvpesq" type="button" class="btn btn-lg btn-primary"
+                                disabled>Pesquisar</button>
+                        </div>
+                        <div id="atualizando" class="col-sm-1 finaly" hidden>
+                            <iframe style="margin-top: 3% !important; margin-left: 10%!important;" src="VAyR.gif" width="40%"
+                                height="40%"  >
+                            </iframe>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" style="margin-top: 10vh !important;">
+            <div class="col-md-4"></div>
+            <div class="col-md-4 cards-medicamento">
+                <div id="card" class="card" hidden="true">
+                    <div class="content" style="width: 100%;">
+                        <p class="title" id="NOME_PRODUTO"></p>
+
+                        <p class="desc">
+                            <p class="resultadpesq" id="CATEGORIA_REGULATORIA"></p>
+                            <p class="resultadpesq" id="CLASSE_TERAPEUTICA"></p>
+                            <p class="resultadpesq" id="PRINCIPIO_ATIVO"></p>
+                            <p class="resultadpesq" id="SITUACAO_REGISTRO"></p>
+
+                        </p>
+
+                        <a id="irbula" class="action">
+                            Bula
+                            <span aria-hidden="true">
+                                →
+                            </span>
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4"></div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
+    </script>
+    <script>
+        $(document).ready(function () {
+
+            function verificaInput(e) {
+                var conteudo = $("#pesqremedio").val();
+
+                if ((conteudo.length != 0) && (conteudo != null)) {
+
+
+                    if ((!conteudo.match(/^(\s)+$/)) && (conteudo != null)) {
+                        //habilita o botão
+                        $("#atvpesq").attr("disabled", false);
+
+                    } else {
+
+                        $("#atvpesq").attr("disabled", true);
+                        $("#pesqremedio").val(null);
+                    }
+                } else {
+                    $("#atvpesq").attr("disabled", true);
+                }
+
+            }
+
+            function pesquisa() {
+                $("#card").attr("hidden", true);
+                $("#atualizando").attr("hidden", false);
+                $('#pesqremedio').css("height", "30%");
+
+
+                medicamento = $("#pesqremedio").val();
+                //console.log(medicamento);
+                const url =
+                    "https://script.google.com/macros/s/AKfycbyOqM2hN7ErVmbCrepNHswpSpiDANkYbi_H3wahAbLDSumEZ_G6TBd7aPAxGLIHwUHbOQ/exec?medicamento=" +
+                    medicamento;
+
+                fetch(url)
+                    .then(response => response.json())
+                    .then(remedio => {
+
+                        console.log(remedio);
+                        var NOME_PRODUTO = remedio['retorno'][0]['NOME_PRODUTO'];
+                        var CATEGORIA_REGULATORIA = remedio['retorno'][0]['CATEGORIA_REGULATORIA'];
+                        var DATA_VENCIMENTO_REGISTRO = remedio['retorno'][0]['DATA_VENCIMENTO_REGISTRO'];
+                        var CLASSE_TERAPEUTICA = remedio['retorno'][0]['CLASSE_TERAPEUTICA'];
+                        var SITUACAO_REGISTRO = remedio['retorno'][0]['SITUACAO_REGISTRO'];
+                        var PRINCIPIO_ATIVO = remedio['retorno'][0]['PRINCIPIO_ATIVO'];
+
+                        $("#NOME_PRODUTO").text(NOME_PRODUTO.substring(0, 1) + NOME_PRODUTO.substring(1,
+                            NOME_PRODUTO.length).toLowerCase());
+
+                        $("#CATEGORIA_REGULATORIA").text("Tipo: " + CATEGORIA_REGULATORIA.substring(0, 1) +
+                            CATEGORIA_REGULATORIA.substring(1, CATEGORIA_REGULATORIA.length)
+                            .toLowerCase());
+                        $("#CLASSE_TERAPEUTICA").text("Classe: " + CLASSE_TERAPEUTICA.substring(0, 1) +
+                            CLASSE_TERAPEUTICA.substring(1, CLASSE_TERAPEUTICA.length).toLowerCase());
+                        $("#SITUACAO_REGISTRO").text("Registro: " + SITUACAO_REGISTRO.substring(0, 1) +
+                            SITUACAO_REGISTRO.substring(1, SITUACAO_REGISTRO.length).toLowerCase());
+                        $("#PRINCIPIO_ATIVO").text("Principio Ativo: " + PRINCIPIO_ATIVO.substring(0, 1) +
+                            PRINCIPIO_ATIVO.substring(1, PRINCIPIO_ATIVO.length).toLowerCase());
+
+                        $("#atualizando").attr("hidden", true);$('#pesqremedio').css("height", "100%");
+                        $('#irbula').removeAttr('href');
+                        $('#card').removeAttr('hidden');
+                        $("#irbula").attr("href",
+                            "https://consultas.anvisa.gov.br/#/bulario/q/?nomeProduto=" +
+                            NOME_PRODUTO);
+
+                    });
+                $("#atvpesq").attr("disabled", true);
+                $("#pesqremedio").val(null);
+
+            }
+
+            $("#atvpesq").attr("disabled", true);
+            $("#pesqremedio").text(null);
+
+            $(document).keypress(function (e) {
+                if (e.which == 13) {
+
+                    pesquisa();
+                    $("#pesqremedio").blur();
+                }
+            });
+
+            $("#pesqremedio").on('keyup', function (e) {
+
+                verificaInput(e);
+            })
+
+            $("#atvpesq").on("click", function () {
+
+                pesquisa();
+            });
+
+        })
+    </script>
+</body>
+
+</html>
